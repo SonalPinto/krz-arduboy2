@@ -74,6 +74,10 @@ extern "C" {
 // UART TX Queue
 #define UART_TXQ_SIZE       128
 
+// SPIM TX/RX Queue
+#define SPIM_TXQ_SIZE       128
+#define SPIM_RXQ_SIZE       128
+
 // UART TX Buffer
 #define UART_BUFFER_SIZE    64
 static uint8_t uart_buffer[UART_BUFFER_SIZE];
@@ -84,6 +88,9 @@ static uint8_t uart_buffer[UART_BUFFER_SIZE];
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define bitToggle(value, bit) ((value) ^= (1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
+
+// Math
+#define abs(x) ((x)>0?(x):-(x))
 
 // Time
 uint32_t millis(void);

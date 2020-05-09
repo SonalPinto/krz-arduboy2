@@ -58,13 +58,16 @@ set(CORE_SRC
   core/main.cpp
 )
 
-set(CORE_INCLUDES core)
+set(ARDUBOY2_SRC
+  src/Arduboy2Core.cpp
+)
 
 set_realpath(CORE_SRC)
-set_realpath(CORE_INCLUDES)
+set_realpath(ARDUBOY2_SRC)
 
 include_directories(SYSTEM
-  ${CORE_INCLUDES}
+  core
+  src
 )
 
 function(add_riscv_executable target)
@@ -94,3 +97,4 @@ endfunction()
 # =============================================================
 
 add_subdirectory(examples/basic)
+add_subdirectory(examples/oled)

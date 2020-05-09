@@ -119,7 +119,7 @@ void Arduboy2Core::bootOLED()
   // OLED to initialize it properly for Arduboy
   LCDCommandMode();
   for (uint8_t i = 0; i < sizeof(lcdBootProgram); i++) {
-    SPItransfer((lcdBootProgram + i));
+    SPItransfer(*(lcdBootProgram + i));
   }
   LCDDataMode();
 }
@@ -145,7 +145,7 @@ void Arduboy2Core::bootSPI()
 void Arduboy2Core::SPItransfer(uint8_t data)
 {
   // Non-blocking write if there's space in the TX Queue.
-  while ((KRZ_SPIM_STATUS & 0x00ff) >= 128);
+  while ((KRZ_SPIM_STATUS & 0x00ff) >= SPIM_TXQ_SIZE);
   MMPTR8(KRZ_SPIM) = data;
 }
 
@@ -185,7 +185,7 @@ void Arduboy2Core::paintScreen(const uint8_t *image)
 {
   for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
   {
-    SPItransfer((image + i));
+    SPItransfer(*(image + i));
   }
 }
 
@@ -200,7 +200,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
   uint8_t mask = clear ? 0x00 : 0xff;
   for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
   {
-    SPItransfer((image + i));
+    SPItransfer(*(image + i));
     image[i] &= mask; 
   }
 }
@@ -284,6 +284,8 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 uint8_t Arduboy2Core::buttonsState()
 {
   uint8_t buttons = 0;
+
+  // FIXME
 
 // #ifdef ARDUBOY_10
 //   // up, right, left, down
