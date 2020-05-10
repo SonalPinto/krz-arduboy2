@@ -743,7 +743,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
   int rowOffset = 0; // +(frame*rows);
   int columnOffset = 0;
 
-  uint8_t byte = 0x00;
+  uint8_t tbyte = 0x00;
   uint8_t bit = 0x01;
   while (rowOffset < rows) // + (frame*rows))
   {
@@ -757,7 +757,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
     for (uint16_t i = 0; i < len; ++i)
     {
       if (spanColour != 0)
-        byte |= bit;
+        tbyte |= bit;
       bit <<= 1;
 
       if (bit == 0) // reached end of byte
@@ -773,7 +773,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
           if (bRow >= 0)
           {
             int16_t index = offset;
-            uint8_t value = byte << yOffset;
+            uint8_t value = tbyte << yOffset;
 
             if (color != 0)
               sBuffer[index] |= value;
@@ -783,7 +783,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
           if ((yOffset != 0) && (bRow < (HEIGHT / 8) - 1))
           {
             int16_t index = offset + WIDTH;
-            uint8_t value = byte >> (8 - yOffset);
+            uint8_t value = tbyte >> (8 - yOffset);
 
             if (color != 0)
               sBuffer[index] |= value;
@@ -801,7 +801,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
         }
 
         // reset byte
-        byte = 0x00;
+        tbyte = 0x00;
         bit = 0x01;
       }
     }
@@ -820,10 +820,10 @@ void Arduboy2Base::display(bool clear)
   paintScreen(sBuffer, clear);
 }
 
-// uint8_t* Arduboy2Base::getBuffer()
-// {
-//   return sBuffer;
-// }
+uint8_t* Arduboy2Base::getBuffer()
+{
+  return sBuffer;
+}
 
 bool Arduboy2Base::pressed(uint8_t buttons)
 {

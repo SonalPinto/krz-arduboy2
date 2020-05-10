@@ -36,12 +36,12 @@ extern uint8_t sBuffer[1024];
 
 // bit values for button states
 // these are determined by the buttonsState() function
-#define LEFT_BUTTON _BV(GPIO2)  /**< The Left button value for functions requiring a bitmask */
-#define RIGHT_BUTTON _BV(GPIO3) /**< The Right button value for functions requiring a bitmask */
-#define UP_BUTTON _BV(GPIO4)    /**< The Up button value for functions requiring a bitmask */
-#define DOWN_BUTTON _BV(GPIO5)  /**< The Down button value for functions requiring a bitmask */
-#define A_BUTTON _BV(GPIO6)     /**< The A button value for functions requiring a bitmask */
-#define B_BUTTON _BV(GPIO7)     /**< The B button value for functions requiring a bitmask */
+#define LEFT_BUTTON _BV(0)  /**< The Left button value for functions requiring a bitmask */
+#define RIGHT_BUTTON _BV(1) /**< The Right button value for functions requiring a bitmask */
+#define UP_BUTTON _BV(2)    /**< The Up button value for functions requiring a bitmask */
+#define DOWN_BUTTON _BV(3)  /**< The Down button value for functions requiring a bitmask */
+#define A_BUTTON _BV(4)     /**< The A button value for functions requiring a bitmask */
+#define B_BUTTON _BV(5)     /**< The B button value for functions requiring a bitmask */
 
 #define LEFT_BUTTON_PORT KRZ_GPIO_WRITE
 #define LEFT_BUTTON_PORTIN KRZ_GPIO_READ

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <mini-printf.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,6 +59,9 @@ extern "C" {
 
 // ============================================================
 // Drivers
+
+#define byte uint8_t
+#define boolean bool
 
 #define HIGH 0x1
 #define LOW  0x0

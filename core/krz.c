@@ -1,7 +1,6 @@
 // Copyright (c) 2020 Sonal Pinto
 // SPDX-License-Identifier: Apache-2.0
 
-#include <mini-printf.h>
 #include <krz.h>
 
 static inline uint32_t read_mcycle(void) {

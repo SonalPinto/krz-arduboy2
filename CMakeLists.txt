@@ -106,3 +106,5 @@ endfunction()
 
 add_subdirectory(examples/basic)
 add_subdirectory(examples/HelloWorld)
+add_subdirectory(examples/Buttons)
+add_subdirectory(examples/ArduBreakout)

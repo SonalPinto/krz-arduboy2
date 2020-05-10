@@ -286,29 +286,10 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 uint8_t Arduboy2Core::buttonsState()
 {
   uint8_t buttons = 0;
+  uint32_t gpio = KRZ_GPIO_READ;
 
-  // FIXME
-
-// #ifdef ARDUBOY_10
-//   // up, right, left, down
-//   buttons = ((~PINF) &
-//               (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) |
-//                _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
-//   // A
-//   if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
-//   // B
-//   if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
-// #elif defined(AB_DEVKIT)
-//   // down, left, up
-//   buttons = ((~PINB) &
-//               (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
-//   // right
-//   if (bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0) { buttons |= RIGHT_BUTTON; }
-//   // A
-//   if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
-//   // B
-//   if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
-// #endif
+  gpio = (gpio >> 6) & 0x3f;
+  buttons = gpio;
 
   return buttons;
 }
