@@ -9,6 +9,9 @@
 
 #include <krz.h>
 
+#define RGB_OFF HIGH
+#define RGB_ON  LOW
+
 // main hardware compile flags
 #define CS_PORT KRZ_GPIO_WRITE      // Display CS port
 #define CS_BIT  OLED_CS             // Display CS physical bit number
