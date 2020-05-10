@@ -61,4 +61,3 @@ void trap_handler (int mcause, int mtval, int mepc) {
   printk("mepc = %x\n", mcause);
   while(1);
 }
-

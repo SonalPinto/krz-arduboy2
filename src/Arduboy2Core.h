@@ -9,6 +9,8 @@
 
 #include <krz.h>
 
+extern uint8_t sBuffer[1024];
+
 #define RGB_OFF HIGH
 #define RGB_ON  LOW
 

@@ -4,7 +4,7 @@
  * Classes to generate simple square wave tones on the Arduboy speaker pins.
  */
 
-#include <Arduino.h>
+#include <krz.h>
 #include "Arduboy2Beep.h"
 
 // Speaker pin 1, Timer 3A, Port C bit 6, Arduino pin 5

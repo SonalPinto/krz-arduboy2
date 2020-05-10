@@ -12,7 +12,7 @@
 #include "Arduboy2Beep.h"
 #include "Sprites.h"
 #include "SpritesB.h"
-#include <Print.h>
+#include <WMath.h>
 
 /** \brief
  * Library version
@@ -206,9 +206,9 @@ struct Point
  */
 class Arduboy2Base : public Arduboy2Core
 {
- friend class Arduboy2Ex;
+friend class Arduboy2Ex;
 
- public:
+public:
   Arduboy2Base();
 
   /** \brief
@@ -241,52 +241,6 @@ class Arduboy2Base : public Arduboy2Core
   void begin();
 
   /** \brief
-   * Turn the RGB LED and display fully on to act as a small flashlight/torch.
-   *
-   * \details
-   * Checks if the UP button is pressed and if so turns the RGB LED and all
-   * display pixels fully on. If the UP button is detected, this function
-   * does not exit. The Arduboy must be restarted after flashlight mode is used.
-   *
-   * This function is called by `begin()` and can be called by a sketch
-   * after `boot()`.
-   *
-   * \note
-   * \parblock
-   * This function also contains code to address a problem with uploading a new
-   * sketch, for sketches that interfere with the bootloader "magic number".
-   * This problem occurs with certain sketches that use large amounts of RAM.
-   * Being in flashlight mode when uploading a new sketch can fix this problem.
-   *
-   * Therefore, for sketches that potentially could cause this problem, and use
-   * `boot()` instead of `begin()`, it is recommended that a call to
-   * `flashlight()` be included after calling `boot()`. If program space is
-   * limited, `safeMode()` can be used instead of `flashlight()`.
-   * \endparblock
-   *
-   * \see begin() boot() safeMode()
-   */
-  void flashlight();
-
-  /** \brief
-   * Handle buttons held on startup for system control.
-   *
-   * \details
-   * This function is called by `begin()` and can be called by a sketch
-   * after `boot()`.
-   *
-   * Hold the B button when booting to enter system control mode.
-   * The B button must be held continuously to remain in this mode.
-   * Then, pressing other buttons will perform system control functions:
-   *
-   * - UP: Set "sound enabled" in EEPROM
-   * - DOWN: Set "sound disabled" (mute) in EEPROM
-   *
-   * \see begin() boot()
-   */
-  void systemButtons();
-
-  /** \brief
    * Display the boot logo sequence using `drawBitmap()`.
    *
    * \details
@@ -303,66 +257,6 @@ class Arduboy2Base : public Arduboy2Core
    * \see begin() boot() bootLogoShell() Arduboy2::bootLogoText()
    */
   void bootLogo();
-
-  /** \brief
-   * Display the boot logo sequence using `drawCompressed()`.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative to
-   * `bootLogo()`. This may reduce code size if the sketch itself uses
-   * `drawCompressed()`.
-   *
-   * \see bootLogo() begin() boot()
-   */
-  void bootLogoCompressed();
-
-  /** \brief
-   * Display the boot logo sequence using `Sprites::drawSelfMasked()`.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative to
-   * `bootLogo()`. This may reduce code size if the sketch itself uses
-   * `Sprites` class functions.
-   *
-   * \see bootLogo() begin() boot() Sprites
-   */
-  void bootLogoSpritesSelfMasked();
-
-  /** \brief
-   * Display the boot logo sequence using `Sprites::drawOverwrite()`.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative to
-   * `bootLogo()`. This may reduce code size if the sketch itself uses
-   * `Sprites` class functions.
-   *
-   * \see bootLogo() begin() boot() Sprites
-   */
-  void bootLogoSpritesOverwrite();
-
-  /** \brief
-   * Display the boot logo sequence using `SpritesB::drawSelfMasked()`.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative to
-   * `bootLogo()`. This may reduce code size if the sketch itself uses
-   * `SpritesB` class functions.
-   *
-   * \see bootLogo() begin() boot() SpritesB
-   */
-  void bootLogoSpritesBSelfMasked();
-
-  /** \brief
-   * Display the boot logo sequence using `SpritesB::drawOverwrite()`.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative to
-   * `bootLogo()`. This may reduce code size if the sketch itself uses
-   * `SpritesB` class functions.
-   *
-   * \see bootLogo() begin() boot() SpritesB
-   */
-  void bootLogoSpritesBOverwrite();
 
   /** \brief
    * Display the boot logo sequence using the provided function
@@ -406,10 +300,6 @@ class Arduboy2Base : public Arduboy2Core
    * \see bootLogo() boot() Arduboy2::bootLogoExtra()
    */
   void bootLogoShell(void (*drawLogo)(int16_t));
-
-  // Called by bootLogoShell() to allow derived classes to display additional
-  // information after the logo stops scrolling down.
-  virtual void bootLogoExtra();
 
   /** \brief
    * Wait until all buttons have been released.
@@ -581,13 +471,6 @@ class Arduboy2Base : public Arduboy2Core
   void fillRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color = WHITE);
 
   /** \brief
-   * Fill the screen buffer with the specified color.
-   *
-   * \param color The fill color (optional; defaults to WHITE).
-   */
-  void fillScreen(uint8_t color = WHITE);
-
-  /** \brief
    * Draw a rectangle with rounded corners.
    *
    * \param x The X coordinate of the left edge.
@@ -636,30 +519,6 @@ class Arduboy2Base : public Arduboy2Core
    * The corners can be at any position with respect to the others.
    */
   void fillTriangle (int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color = WHITE);
-
-  /** \brief
-   * Draw a bitmap from an array in program memory.
-   *
-   * \param x The X coordinate of the top left pixel affected by the bitmap.
-   * \param y The Y coordinate of the top left pixel affected by the bitmap.
-   * \param bitmap A pointer to the bitmap array in program memory.
-   * \param w The width of the bitmap in pixels.
-   * \param h The height of the bitmap in pixels.
-   * \param color The color of pixels for bits set to 1 in the bitmap.
-   *              If the value is INVERT, bits set to 1 will invert the
-   *              corresponding pixel. (optional; defaults to WHITE).
-   *
-   * \details
-   * Bits set to 1 in the provided bitmap array will have their corresponding
-   * pixel set to the specified color. For bits set to 0 in the array, the
-   * corresponding pixel will be left unchanged.
-   *
-   * Each byte in the array specifies a vertical column of 8 pixels, with the
-   * least significant bit at the top.
-   *
-   * The array must be located in program memory by using the PROGMEM modifier.
-   */
-  static void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color = WHITE);
 
   /** \brief
    * Draw a bitmap from a horizontally oriented array in program memory.
@@ -715,6 +574,37 @@ class Arduboy2Base : public Arduboy2Core
   static void drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t color = WHITE);
 
   /** \brief
+   * Fill the screen buffer with the specified color.
+   *
+   * \param color The fill color (optional; defaults to WHITE).
+   */
+  void fillScreen(uint8_t color = WHITE);
+
+  /** \brief
+   * Draw a bitmap from an array in program memory.
+   *
+   * \param x The X coordinate of the top left pixel affected by the bitmap.
+   * \param y The Y coordinate of the top left pixel affected by the bitmap.
+   * \param bitmap A pointer to the bitmap array in program memory.
+   * \param w The width of the bitmap in pixels.
+   * \param h The height of the bitmap in pixels.
+   * \param color The color of pixels for bits set to 1 in the bitmap.
+   *              If the value is INVERT, bits set to 1 will invert the
+   *              corresponding pixel. (optional; defaults to WHITE).
+   *
+   * \details
+   * Bits set to 1 in the provided bitmap array will have their corresponding
+   * pixel set to the specified color. For bits set to 0 in the array, the
+   * corresponding pixel will be left unchanged.
+   *
+   * Each byte in the array specifies a vertical column of 8 pixels, with the
+   * least significant bit at the top.
+   *
+   * The array must be located in program memory by using the PROGMEM modifier.
+   */
+  static void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color = WHITE);
+
+  /** \brief
    * Get a pointer to the display buffer in RAM.
    *
    * \return A pointer to the display buffer array in RAM.
@@ -766,9 +656,6 @@ class Arduboy2Base : public Arduboy2Core
    * \see generateRandomSeed()
    */
   void initRandomSeed();
-
-  // Swap the values of two int16_t variables passed by reference.
-  void swap(int16_t& a, int16_t& b);
 
   /** \brief
    * Set the frame rate used by the frame control functions.
@@ -1265,6 +1152,9 @@ class Arduboy2Base : public Arduboy2Core
    */
   void writeShowBootLogoLEDsFlag(bool val);
 
+  // Swap the values of two int16_t variables passed by reference.
+  void swap(int16_t& a, int16_t& b);
+
   /** \brief
    * A counter which is incremented once per frame.
    *
@@ -1300,31 +1190,9 @@ class Arduboy2Base : public Arduboy2Core
    */
   uint16_t frameCount;
 
-  /** \brief
-   * The display buffer array in RAM.
-   *
-   * \details
-   * The display buffer (also known as the screen buffer) contains an
-   * image bitmap of the desired contents of the display, which is written
-   * to the display using the `display()` function. The drawing functions of
-   * this library manipulate the contents of the display buffer. A sketch can
-   * also access the display buffer directly.
-   *
-   * \see getBuffer()
-   */
-  static uint8_t sBuffer[(HEIGHT*WIDTH)/8];
-
- protected:
-  // helper function for sound enable/disable system control
-  void sysCtrlSound(uint8_t buttons, uint8_t led, uint8_t eeVal);
-
+protected:
   // functions passed to bootLogoShell() to draw the logo
   static void drawLogoBitmap(int16_t y);
-  static void drawLogoCompressed(int16_t y);
-  static void drawLogoSpritesSelfMasked(int16_t y);
-  static void drawLogoSpritesOverwrite(int16_t y);
-  static void drawLogoSpritesBSelfMasked(int16_t y);
-  static void drawLogoSpritesBOverwrite(int16_t y);
 
   // For button handling
   uint8_t currentButtonState;
@@ -1359,96 +1227,18 @@ class Arduboy2Base : public Arduboy2Core
  *
  * \see Arduboy2Base
  */
-class Arduboy2 : public Print, public Arduboy2Base
+
+#define DEC 10
+#define HEX 16
+#define OCT 8
+#define BIN 2
+
+class Arduboy2 : public Arduboy2Base
 {
- friend class Arduboy2Ex;
+friend class Arduboy2Ex;
 
- public:
+public:
   Arduboy2();
-
-  /** \class Print
-   * \brief
-   * The Arduino `Print` class is available for writing text to the screen
-   * buffer.
-   *
-   * \details
-   * For an `Arduboy2` class object, functions provided by the Arduino `Print`
-   * class can be used to write text to the screen buffer, in the same manner
-   * as the Arduino `Serial.print()`, etc., functions.
-   *
-   * Print will use the `write()` function to actually draw each character
-   * in the screen buffer.
-   *
-   * See:
-   * https://www.arduino.cc/en/Serial/Print
-   *
-   * Example:
-   * \code{.cpp}
-   * int value = 42;
-   *
-   * arduboy.println("Hello World"); // Prints "Hello World" and then moves the
-   *                                 // text cursor to the start of the next line
-   * arduboy.print(value);  // Prints "42"
-   * arduboy.print('\n');   // Moves the text cursor to the start of the next line
-   * arduboy.print(78, HEX) // Prints "4E" (78 in hexadecimal)
-   * \endcode
-   *
-   * \see Arduboy2::write()
-   */
-  using Print::write;
-
-  /** \brief
-   * Display the boot logo sequence using printed text instead of a bitmap.
-   *
-   * \details
-   * This function can be called by a sketch after `boot()` as an alternative
-   * to `bootLogo()`.
-   *
-   * The Arduboy logo scrolls down from the top of the screen to the center
-   * while the RGB LEDs light in sequence.
-   *
-   * This function is the same as `bootLogo()` except the logo is printed as
-   * text instead of being rendered as a bitmap. It can be used to save some
-   * code space in a case where the sketch is using the Print class functions
-   * to display text. However, the logo will not look as good when printed as
-   * text as it does with the bitmap used by `bootLogo()`.
-   *
-   * If the RIGHT button is pressed while the logo is scrolling down,
-   * the boot logo sequence will be aborted. This can be useful for
-   * developers who wish to quickly start testing, or anyone else who is
-   * impatient and wants to go straight to the actual sketch.
-   *
-   * If the SYS_FLAG_SHOW_LOGO_LEDS flag in system EEPROM is cleared,
-   * the RGB LEDs will not be flashed during the logo display sequence.
-   *
-   * If the SYS_FLAG_SHOW_LOGO flag in system EEPROM is cleared, this function
-   * will return without executing the logo display sequence.
-   *
-   * \see bootLogo() boot() Arduboy2::bootLogoExtra()
-   */
-  void bootLogoText();
-
-  /** \brief
-   * Show the unit name at the bottom of the boot logo screen.
-   *
-   * \details
-   * This function is called by `bootLogoShell()` and `bootLogoText()`.
-   *
-   * If a unit name has been saved in system EEPROM, it will be displayed at
-   * the bottom of the screen. This function pauses for a short time to allow
-   * the name to be seen.
-   *
-   * If the SYS_FLAG_UNAME flag in system EEPROM is cleared, this function
-   * will return without showing the unit name or pausing.
-   *
-   * \note
-   * This function would not normally be called directly from within a sketch
-   * itself.
-   *
-   * \see readUnitName() writeUnitName() bootLogo() bootLogoShell()
-   * bootLogoText() writeShowUnitNameFlag() begin()
-   */
-  virtual void bootLogoExtra();
 
   /** \brief
    * Write a single ASCII character at the current text cursor location.
@@ -1478,7 +1268,29 @@ class Arduboy2 : public Print, public Arduboy2Base
    *
    * \see Print setTextSize() setTextWrap()
    */
-  virtual size_t write(uint8_t);
+  size_t write(uint8_t);
+  size_t write(const char *str);
+  size_t write(const uint8_t *buffer, size_t size);
+  size_t write(const char *buffer, size_t size);
+
+  size_t printNumber(uint32_t, uint8_t);
+
+  size_t print(const char[]);
+  size_t print(char);
+  size_t print(unsigned char, int = DEC);
+  size_t print(int, int = DEC);
+  size_t print(unsigned int, int = DEC);
+  size_t print(long, int = DEC);
+  size_t print(unsigned long, int = DEC);
+
+  size_t println(const char[]);
+  size_t println(char);
+  size_t println(unsigned char, int = DEC);
+  size_t println(int, int = DEC);
+  size_t println(unsigned int, int = DEC);
+  size_t println(long, int = DEC);
+  size_t println(unsigned long, int = DEC);
+  size_t println(void);   
 
   /** \brief
    * Draw a single ASCII character at the specified location in the screen
@@ -1645,6 +1457,8 @@ class Arduboy2 : public Print, public Arduboy2Base
    * Clear the display buffer and set the text cursor to location 0, 0
    */
   void clear();
+
+  void begin();
 
  protected:
   int16_t cursor_x;

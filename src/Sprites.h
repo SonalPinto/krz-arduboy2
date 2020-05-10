@@ -7,7 +7,7 @@
 #ifndef Sprites_h
 #define Sprites_h
 
-#include "Arduboy2.h"
+#include "Arduboy2Core.h"
 #include "SpritesCommon.h"
 
 /** \brief

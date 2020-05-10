@@ -62,6 +62,8 @@ extern "C" {
 #define HIGH 0x1
 #define LOW  0x0
 
+#define F(string_literal) (string_literal)
+
 #define _BV(bit) (1UL<<(bit))
 #define bit(b)   (1UL << (b))
 

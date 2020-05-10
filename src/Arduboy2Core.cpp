@@ -6,6 +6,8 @@
 
 #include "Arduboy2Core.h"
 
+uint8_t sBuffer[1024];
+
 const uint8_t lcdBootProgram[] = {
   // boot defaults are commented out but left here in case they
   // might prove useful for reference
