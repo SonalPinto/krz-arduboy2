@@ -66,12 +66,6 @@ void init() {
   memset(uart_buffer, 0x00, UART_BUFFER_SIZE);
 }
 
-void setup() {
-}
-
-void loop() {
-}
-
 int main(void) {
 
   init();

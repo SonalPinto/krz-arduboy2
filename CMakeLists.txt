@@ -34,11 +34,8 @@ add_compile_options(
   -O2
   -march=rv32i
   -mabi=ilp32
-  -static
-  -nostartfiles
   -fdata-sections -ffunction-sections
-  --specs=nano.specs
-  --specs=nosys.specs
+  --specs=picolibc.specs
 )
 
 set(LINKER_SCRIPT core/link.ld)
@@ -46,37 +43,27 @@ set_realpath(LINKER_SCRIPT)
 
 add_link_options(
   -Wl,--gc-sections
-  -T ${LINKER_SCRIPT}
   -static
-  -nostartfiles
-  --specs=nano.specs
-  --specs=nosys.specs
+  --specs=picolibc.specs
+  -T ${LINKER_SCRIPT}
 )
-
-set(CORE_SRC
-  core/crt0.S
-  core/krz.c
-  core/WMath.cpp
-  core/mini-printf.c
-  core/main.cpp
-)
-
-set(ARDUBOY2_SRC
-  src/Arduboy2Core.cpp
-  src/Arduboy2Audio.cpp
-  src/Arduboy2Beep.cpp
-  src/SpritesB.cpp
-  src/Sprites.cpp
-  src/Arduboy2.cpp
-)
-
-set_realpath(CORE_SRC)
-set_realpath(ARDUBOY2_SRC)
 
 include_directories(SYSTEM
   core
-  src
 )
+
+add_subdirectory(core)
+
+# set(ARDUBOY2_SRC
+#   src/Arduboy2Core.cpp
+#   src/Arduboy2Audio.cpp
+#   src/Arduboy2Beep.cpp
+#   src/SpritesB.cpp
+#   src/Sprites.cpp
+#   src/Arduboy2.cpp
+# )
+
+# =============================================================
 
 function(add_riscv_executable target)
   add_executable(${target}
@@ -92,7 +79,7 @@ function(add_riscv_executable target)
 
   add_custom_command(TARGET ${target} POST_BUILD
     COMMAND
-      ${OBJDUMP} -D "${target}.elf" > "${target}.objdump"
+      ${OBJDUMP} -d "${target}.elf" > "${target}.objdump"
     COMMAND
       ${OBJCOPY} -O binary "${target}.elf" "${target}.bin"
     COMMAND
@@ -102,9 +89,7 @@ function(add_riscv_executable target)
   )
 endfunction()
 
-# =============================================================
-
-add_subdirectory(examples/basic)
-add_subdirectory(examples/HelloWorld)
-add_subdirectory(examples/Buttons)
-add_subdirectory(examples/ArduBreakout)
+add_subdirectory(examples/blinky)
+# add_subdirectory(examples/HelloWorld)
+# add_subdirectory(examples/Buttons)
+# add_subdirectory(examples/ArduBreakout)

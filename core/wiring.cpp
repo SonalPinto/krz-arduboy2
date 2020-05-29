@@ -27,7 +27,7 @@
 
 static inline uint32_t read_mcycle(void) {
   uint32_t tmp;
-  asm ("csrr %0, mcycle": "=r" (tmp));
+  asm volatile("csrr %0, mcycle": "=r" (tmp));
   return tmp;
 }
 
