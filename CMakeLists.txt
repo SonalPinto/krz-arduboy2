@@ -22,7 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_OUTPUT_DIR})
 
 include(macros)
 
-set(tools /opt/riscv32i)
+set(tools $ENV{RISCV_TOOLCHAIN_DIR})
 set(CMAKE_C_COMPILER ${tools}/bin/riscv32-unknown-elf-gcc)
 set(CMAKE_CXX_COMPILER ${tools}/bin/riscv32-unknown-elf-g++)
 set(CMAKE_ASM_COMPILER ${tools}/bin/riscv32-unknown-elf-gcc)
@@ -50,7 +50,7 @@ add_link_options(
   -static
   -nostartfiles
   --specs=nano.specs
-  --specs=nosys.specs 
+  --specs=nosys.specs
 )
 
 set(CORE_SRC
@@ -85,7 +85,7 @@ function(add_riscv_executable target)
 
   set_target_properties(
     ${target}
-    PROPERTIES 
+    PROPERTIES
       OUTPUT_NAME "${target}"
       SUFFIX ".elf"
   )
