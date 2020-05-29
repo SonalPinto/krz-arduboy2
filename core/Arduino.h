@@ -39,8 +39,10 @@ Minimal Port of the Arduino API for KRZ:Arduboy2
 #define MMPTR32(x) (*((volatile uint32_t*)(x)))
 #define MMPTR8(x)  (*((volatile uint8_t*)(x)))
 
+#ifndef F_CPU
 // KRZ on iCEBreaker: 24MHz system clock using internal oscillator
 #define F_CPU               24000000
+#endif
 
 // UART TX Queue
 #define UART_TXQ_SIZE       128
@@ -50,7 +52,7 @@ Minimal Port of the Arduino API for KRZ:Arduboy2
 #define SPIM_RXQ_SIZE       128
 
 // UART TX Buffer
-#define UART_BUFFER_SIZE    64
+#define UART_BUFFER_SIZE    128
 static uint8_t uart_buffer[UART_BUFFER_SIZE];
 
 #define KRZ_GPREG           0x800000
@@ -162,8 +164,6 @@ int map(int, int, int, int, int);
 extern "C" {
 // Print
 void printk(const char *fmt, ...);
-__attribute__ ((interrupt)) void trap_handler(void);
-
 }
 
 #endif // _ARDUINO_H_

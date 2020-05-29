@@ -25,15 +25,9 @@
 
 #include <Arduino.h>
 
-static inline uint32_t read_mcycle(void);
-
-// ------------------------------------------------------------
 static inline uint32_t read_mcycle(void) {
   uint32_t tmp;
-  asm volatile(
-      "csrr %0, mcycle \n"
-      : "=r" (tmp)
-  );
+  asm ("csrr %0, mcycle": "=r" (tmp));
   return tmp;
 }
 
@@ -77,12 +71,3 @@ void printk(const char *fmt, ...) {
     p++;
   }
 }
-
-__attribute__ ((interrupt)) void trap_handler(void) {
-  printk("\n\n-= TRAP =-\n");
-  // printk("mcause = %x\n", mcause);
-  // printk("mtval = %x\n", mcause);
-  // printk("mepc = %x\n", mcause);
-  // while(1);
-}
-
