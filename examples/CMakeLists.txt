@@ -8,3 +8,4 @@ subdirlist(subdirs ${CMAKE_CURRENT_LIST_DIR})
 # endforeach()
 
 add_subdirectory(blinky)
+add_subdirectory(oled)
