@@ -31,22 +31,22 @@ static inline uint32_t read_mcycle(void) {
   return tmp;
 }
 
-void delayMicroseconds(uint32_t us) {
-  uint32_t start, delay;
+void delayMicroseconds(unsigned int us) {
+  unsigned int start, delay;
   start = read_mcycle();
   delay = us * clockCyclesPerMicrosecond();
   while(read_mcycle() - start < delay);
 }
 
-void delay(uint32_t ms) {
-  for (uint32_t i=0; i<ms; i++) delayMicroseconds(1000);
+void delay(unsigned long ms) {
+  for (unsigned long i=0; i<ms; i++) delayMicroseconds(1000);
 }
 
-uint32_t micros(void) {
+unsigned long micros(void) {
   return clockCyclesToMicroseconds(read_mcycle());
 }
 
-uint32_t millis(void) {
+unsigned long millis(void) {
   return (micros() / 1000);
 }
 

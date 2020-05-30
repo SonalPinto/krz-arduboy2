@@ -34,6 +34,13 @@ void setup () {
 
   // print banner
   print_banner();
+
+  printk("---- TYPES ----\n");
+  printk("char = %d\n", sizeof(char));
+  printk("int = %d\n", sizeof(int));
+  printk("long = %d\n", sizeof(long));
+  printk("float = %d\n", sizeof(float));
+  printk("double = %d\n", sizeof(double));
 }
 
 void loop() {

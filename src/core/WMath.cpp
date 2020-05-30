@@ -27,14 +27,14 @@
 
 #include <Arduino.h>
 
-void randomSeed(uint32_t seed)
+void randomSeed(unsigned long seed)
 {
   if (seed != 0) {
     srand(seed);
   }
 }
 
-int random(int howbig)
+long random(long howbig)
 {
   if (howbig == 0) {
     return 0;
@@ -42,16 +42,16 @@ int random(int howbig)
   return rand() % howbig;
 }
 
-int random(int howsmall, int howbig)
+long random(long howsmall, long howbig)
 {
   if (howsmall >= howbig) {
     return howsmall;
   }
-  int diff = howbig - howsmall;
+  long diff = howbig - howsmall;
   return random(diff) + howsmall;
 }
 
-int map(int x, int in_min, int in_max, int out_min, int out_max)
+long map(long x, long in_min, long in_max, long out_min, long out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

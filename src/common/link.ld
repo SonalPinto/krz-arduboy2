@@ -1,7 +1,10 @@
 /* Copyright (c) 2020 Sonal Pinto       */
 /* SPDX-License-Identifier: Apache-2.0  */
-
-/*KRZ::picolibc.ld*/
+/*
+ * KRZ::picolibc.ld
+ * Modified 2020 Sonal Pinto
+ *
+ */
 
 OUTPUT_ARCH( "riscv" )
 

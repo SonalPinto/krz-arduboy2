@@ -38,7 +38,7 @@ add_compile_options(
   --specs=picolibc.specs
 )
 
-set(LINKER_SCRIPT core/link.ld)
+set(LINKER_SCRIPT src/common/link.ld)
 set_realpath(LINKER_SCRIPT)
 
 add_link_options(
@@ -48,11 +48,7 @@ add_link_options(
   -T ${LINKER_SCRIPT}
 )
 
-include_directories(SYSTEM
-  core
-)
-
-add_subdirectory(core)
+add_subdirectory(src)
 
 # set(ARDUBOY2_SRC
 #   src/Arduboy2Core.cpp
@@ -89,7 +85,6 @@ function(add_riscv_executable target)
   )
 endfunction()
 
-add_subdirectory(examples/blinky)
-# add_subdirectory(examples/HelloWorld)
-# add_subdirectory(examples/Buttons)
-# add_subdirectory(examples/ArduBreakout)
+# =============================================================
+
+add_subdirectory(examples)

@@ -27,10 +27,9 @@ Minimal Port of the Arduino API for KRZ:Arduboy2
 #ifndef _ARDUINO_H_
 #define _ARDUINO_H_
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstdint>
+#include <cstring>
 #include <mini-printf.h>
 
 // ============================================================
@@ -87,6 +86,17 @@ static uint8_t uart_buffer[UART_BUFFER_SIZE];
 #define FLASH_CS    GPIO2
 
 // ============================================================
+/*
+riscv32-unknown-elf-g++ -march=rv32i -mabi=ilp32
+---- TYPES ----
+char = 1
+int = 4
+long = 4
+float = 4
+double = 8
+*/
+
+// ============================================================
 // Drivers
 
 #define HIGH 0x1
@@ -138,16 +148,21 @@ static uint8_t uart_buffer[UART_BUFFER_SIZE];
 #define bitToggle(value, bit) ((value) ^= (1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
 
+#define PROGMEM
+#define PGM_P const char *
+#define PGM_VOID_P const void *
+#define PSTR(s) ((const PROGMEM char *)(s))
+
 // Arduino Types
-typedef uint16_t word;
+typedef unsigned int word;
 typedef bool boolean;
 typedef uint8_t byte;
 
 // Time
-uint32_t millis(void);
-uint32_t micros(void);
-void delay(uint32_t);
-void delayMicroseconds(uint32_t us);
+unsigned long millis();
+unsigned long micros();
+void delay(unsigned long);
+void delayMicroseconds(unsigned int us);
 
 void init(void);
 void setup(void);
@@ -156,10 +171,10 @@ void loop(void);
 // #include "WString.h"
 
 // WMath
-int random(int);
-int random(int, int);
-void randomSeed(uint32_t);
-int map(int, int, int, int, int);
+long random(long);
+long random(long, long);
+void randomSeed(unsigned long);
+long map(long, long, long, long, long);
 
 extern "C" {
 // Print

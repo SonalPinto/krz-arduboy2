@@ -54,10 +54,8 @@ void init() {
   I need to do is setup the trap handler vector. Done.
 
   This is merely one of its attractive features. There's also the fine tuned stdlib
-  with TLS and tinystdio. I have no doubt that picolibc will replace newlibc-nano
+  with TLS, and tinystdio. I have no doubt that picolibc will replace newlibc-nano
   for embedded applications.
-
-  I <3 picolibc
   */
 
   // Setup trap handler
