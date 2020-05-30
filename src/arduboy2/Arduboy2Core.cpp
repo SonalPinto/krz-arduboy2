@@ -6,9 +6,8 @@
 
 #include "Arduboy2Core.h"
 
-uint8_t sBuffer[1024];
-
-const uint8_t lcdBootProgram[] = {
+const uint8_t PROGMEM lcdBootProgram[] =
+{
   // boot defaults are commented out but left here in case they
   // might prove useful for reference
   //
@@ -89,7 +88,7 @@ void Arduboy2Core::bootPins()
   // Init GPIO
   KRZ_GPIO_DIR = (1<<RED_LED_BIT)
     | (1<<GREEN_LED_BIT)
-    | (1<<FLASH_CS) 
+    | (1<<FLASH_CS)
     | (1<<CS_BIT)
     | (1<<DC_BIT)
     | (1<<RST_BIT);
@@ -101,8 +100,8 @@ void Arduboy2Core::bootPins()
   //  - OLED RST = Reset State
   KRZ_GPIO_WRITE = (1<<LEDR)
     | (1<<LEDG)
-    | (1<<FLASH_CS) 
-    | (1<<OLED_CS)
+    | (1<<FLASH_CS)
+    | (1<<CS_BIT)
     | (0<<DC_BIT)
     | (0<<RST_BIT);
 }
@@ -121,7 +120,7 @@ void Arduboy2Core::bootOLED()
   // OLED to initialize it properly for Arduboy
   LCDCommandMode();
   for (uint8_t i = 0; i < sizeof(lcdBootProgram); i++) {
-    SPItransfer(*(lcdBootProgram + i));
+    SPItransfer(pgm_read_byte(lcdBootProgram + i));
   }
   LCDDataMode();
 }
@@ -139,8 +138,8 @@ void Arduboy2Core::LCDCommandMode()
 // Initialize the SPI interface for the display
 void Arduboy2Core::bootSPI()
 {
-  // master, mode 0, MSB first, CPU clock / 2 (8MHz)
-  // NOP, these settings are default
+  // Set SPI prescaler to max = 12MHz and SPI-Mode-0
+  KRZ_SPIM_CTRL = 0;
 }
 
 // Write to the SPI bus (MOSI pin)
@@ -150,8 +149,6 @@ void Arduboy2Core::SPItransfer(uint8_t data)
   while ((KRZ_SPIM_STATUS & 0x00ff) >= SPIM_TXQ_SIZE);
   MMPTR8(KRZ_SPIM) = data;
 }
-
-/* Power Management */
 
 void Arduboy2Core::idle()
 {
@@ -164,7 +161,7 @@ void Arduboy2Core::displayOff()
   LCDCommandMode();
   SPItransfer(0xAE); // display off
   SPItransfer(0x8D); // charge pump:
-  SPItransfer(0x10); // disable
+  SPItransfer(0x10); //   disable
   delayShort(250);
   bitClear(RST_PORT, RST_BIT); // set display reset pin low (reset state)
 }
@@ -174,7 +171,6 @@ void Arduboy2Core::displayOn()
 {
   bootOLED();
 }
-
 
 /* Drawing */
 
@@ -187,23 +183,19 @@ void Arduboy2Core::paintScreen(const uint8_t *image)
 {
   for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
   {
-    SPItransfer(*(image + i));
+    SPItransfer(pgm_read_byte(image + i));
   }
 }
 
 // paint from a memory buffer, this should be FAST as it's likely what
 // will be used by any buffer based subclass
-//
-// The following assembly code runs "open loop". It relies on instruction
-// execution times to allow time for each byte of data to be clocked out.
-// It is specifically tuned for a 16MHz CPU clock and SPI clocking at 8MHz.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
   uint8_t mask = clear ? 0x00 : 0xff;
   for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
   {
     SPItransfer(*(image + i));
-    image[i] &= mask; 
+    image[i] &= mask;
   }
 }
 

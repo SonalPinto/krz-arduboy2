@@ -14,3 +14,19 @@ target_include_directories(core SYSTEM
     common
     core
 )
+
+add_library(arduboy2 STATIC
+  arduboy2/Arduboy2Core.cpp
+)
+
+target_include_directories(arduboy2 SYSTEM
+  PUBLIC
+    common
+    core
+    arduboy2
+)
+
+target_link_libraries(arduboy2
+  PUBLIC
+    core
+)

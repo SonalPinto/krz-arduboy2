@@ -153,6 +153,8 @@ double = 8
 #define PGM_VOID_P const void *
 #define PSTR(s) ((const PROGMEM char *)(s))
 
+#define pgm_read_byte(x) (*((const uint8_t *)(x)))
+
 // Arduino Types
 typedef unsigned int word;
 typedef bool boolean;

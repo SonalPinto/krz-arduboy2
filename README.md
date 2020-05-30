@@ -14,7 +14,7 @@ Early protoype: https://www.youtube.com/watch?v=nveWIcuFHzo
 
 Porting the Arduboy2 library was a breeze because of how well documented the code is. The avr-asm specific code have neat equivlanet C++ in the comments surrounding them. Display and input hardware specific calls were easy to replace - SPI writes for the OLED and GPIO polls for the input. Audio and EEPROM (save files) were *slightly* tricky.
 
-I had a lot of help from the [Arduboy community forums (https://community.arduboy.com/t/arduboy-clone-on-risc-v-fpga/8843),  especially from Pharap and MLXXXP. For example, being reminded that the avr-libc types are a thing -- where int is 16b. I used Pharap's [PokittoArduboy2Prototype](https://github.com/Pharap/PokittoArduboy2Prototype) as a reference for this work.
+I had a lot of help from the [Arduboy community forums (https://community.arduboy.com/t/arduboy-clone-on-risc-v-fpga/8843),  especially from Pharap and MLXXXP. For example, being reminded that the avr-libc types are a thing -- where int is 16b. Aside from the original Arudoboy2 library, I used Pharap's [PokittoArduboy2Prototype](https://github.com/Pharap/PokittoArduboy2Prototype) as a reference for this work.
 
 
 ### Arduino Core

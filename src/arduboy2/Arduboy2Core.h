@@ -1,28 +1,28 @@
 /**
  * @file Arduboy2Core.h
  * \brief
- * The Arduboy2Core class for Arduboy hardware initialization and control.
+ * The Arduboy2Core class for Arduboy hardware initilization and control.
  */
 
 #ifndef ARDUBOY2_CORE_H
 #define ARDUBOY2_CORE_H
 
-#include <krz.h>
-
-extern uint8_t sBuffer[1024];
+#include <Arduino.h>
 
 #define RGB_OFF HIGH
 #define RGB_ON  LOW
 
-// main hardware compile flags
+// ============================================================
+// PINOUT
+
 #define CS_PORT KRZ_GPIO_WRITE      // Display CS port
-#define CS_BIT  OLED_CS             // Display CS physical bit number
+#define CS_BIT  GPIO3             // Display CS physical bit number
 
 #define DC_PORT KRZ_GPIO_WRITE      // Display D/C port
-#define DC_BIT  GPIO0               // Display D/C physical bit number
+#define DC_BIT  GPIO4               // Display D/C physical bit number
 
 #define RST_PORT KRZ_GPIO_WRITE     // Display reset port
-#define RST_BIT  GPIO1              // Display reset physical bit number
+#define RST_BIT  GPIO5              // Display reset physical bit number
 
 #define RED_LED_PORT KRZ_GPIO_WRITE
 #define RED_LED_BIT LEDR
@@ -32,7 +32,6 @@ extern uint8_t sBuffer[1024];
 
 #define RED_LED   LEDR    /**< The pin number for the red color in the RGB LED. */
 #define GREEN_LED LEDG    /**< The pin number for the greem color in the RGB LED. */
-#define BLUE_LED  0       /**< The pin number for the blue color in the RGB LED. */
 
 // bit values for button states
 // these are determined by the buttonsState() function
@@ -45,51 +44,74 @@ extern uint8_t sBuffer[1024];
 
 #define LEFT_BUTTON_PORT KRZ_GPIO_WRITE
 #define LEFT_BUTTON_PORTIN KRZ_GPIO_READ
-#define LEFT_BUTTON_BIT GPIO2
+#define LEFT_BUTTON_BIT GPIO6
 
 #define RIGHT_BUTTON_PORT KRZ_GPIO_WRITE
 #define RIGHT_BUTTON_PORTIN KRZ_GPIO_READ
-#define RIGHT_BUTTON_BIT GPIO3
+#define RIGHT_BUTTON_BIT GPIO7
 
 #define UP_BUTTON_PORT KRZ_GPIO_WRITE
 #define UP_BUTTON_PORTIN KRZ_GPIO_READ
-#define UP_BUTTON_BIT GPIO4
+#define UP_BUTTON_BIT GPIO8
 
 #define DOWN_BUTTON_PORT KRZ_GPIO_WRITE
 #define DOWN_BUTTON_PORTIN KRZ_GPIO_READ
-#define DOWN_BUTTON_BIT GPIO5
+#define DOWN_BUTTON_BIT GPIO9
 
 #define A_BUTTON_PORT KRZ_GPIO_WRITE
 #define A_BUTTON_PORTIN KRZ_GPIO_READ
-#define A_BUTTON_BIT GPIO6
+#define A_BUTTON_BIT GPIO10
 
 #define B_BUTTON_PORT KRZ_GPIO_WRITE
 #define B_BUTTON_PORTIN KRZ_GPIO_READ
-#define B_BUTTON_BIT GPIO7
+#define B_BUTTON_BIT GPIO11
 
-// NOTE: SPEAKER1/2 is not support on the KRZ right now
+// FIXME: SPEAKER
 
+// ============================================================
 // OLED hardware (SSD1306)
 
-#define OLED_PIXELS_INVERTED 0xA7 // All pixels inverted
-#define OLED_PIXELS_NORMAL 0xA6 // All pixels normal
+// All pixels inverted
+#define OLED_PIXELS_INVERTED 0xA7
 
-#define OLED_ALL_PIXELS_ON 0xA5 // all pixels on
-#define OLED_PIXELS_FROM_RAM 0xA4 // pixels mapped to display RAM contents
+// All pixels normal
+#define OLED_PIXELS_NORMAL 0xA6
 
-#define OLED_VERTICAL_FLIPPED 0xC0 // reversed COM scan direction
-#define OLED_VERTICAL_NORMAL 0xC8 // normal COM scan direction
 
-#define OLED_HORIZ_FLIPPED 0xA0 // reversed segment re-map
-#define OLED_HORIZ_NORMAL 0xA1 // normal segment re-map
+// all pixels on
+#define OLED_ALL_PIXELS_ON 0xA5
+
+// pixels mapped to display RAM contents
+#define OLED_PIXELS_FROM_RAM 0xA4
+
+
+// reversed COM scan direction
+#define OLED_VERTICAL_FLIPPED 0xC0
+
+// normal COM scan direction
+#define OLED_VERTICAL_NORMAL 0xC8
+
+
+// reversed segment re-map
+#define OLED_HORIZ_FLIPPED 0xA0
+
+// normal segment re-map
+#define OLED_HORIZ_NORMAL 0xA1
 
 // -----
 
-#define WIDTH 128 /**< The width of the display in pixels */
-#define HEIGHT 64 /**< The height of the display in pixels */
+/// The width of the display in pixels
+#define WIDTH 128
 
-#define COLUMN_ADDRESS_END (WIDTH - 1) & 127   // 128 pixels wide
-#define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7    // 8 pages high
+/// The height of the display in pixels
+#define HEIGHT 64
+
+
+// 128 pixels wide
+#define COLUMN_ADDRESS_END (WIDTH - 1) & 127
+
+// 8 pages high
+#define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7
 
 /** \brief
  * Lower level functions generally dealing directly with the hardware.
@@ -212,15 +234,23 @@ class Arduboy2Core
      * Get the width of the display in pixels.
      *
      * \return The width of the display in pixels.
+     *
+     * \note
+     * In most cases, the defined value `WIDTH` would be better to use instead
+     * of this function.
      */
-    constexpr uint8_t static width() { return WIDTH; }
+    uint8_t static width();
 
     /** \brief
      * Get the height of the display in pixels.
      *
      * \return The height of the display in pixels.
+     *
+     * \note
+     * In most cases, the defined value `HEIGHT` would be better to use instead
+     * of this function.
      */
-    constexpr uint8_t static height() { return HEIGHT; }
+    uint8_t static height();
 
     /** \brief
      * Get the current state of all buttons as a bitmask.
@@ -285,7 +315,7 @@ class Arduboy2Core
      *
      * \see paint8Pixels()
      */
-    void static paintScreen(const uint8_t *image);
+    void static paintScreen(const uint8_t * image);
 
     /** \brief
      * Paints an entire image directly to the display from an array in RAM.
@@ -572,7 +602,6 @@ class Arduboy2Core
      */
     void static delayShort(uint16_t ms) __attribute__ ((noinline));
 
-
   protected:
     // internals
     void static bootSPI();
@@ -580,4 +609,4 @@ class Arduboy2Core
     void static bootPins();
 };
 
-#endif
+#endif // ARDUBOY2_CORE_H
