@@ -16,11 +16,6 @@ Porting the Arduboy2 library was a breeze because of how well documented the cod
 
 I had a lot of help from the [Arduboy community forums (https://community.arduboy.com/t/arduboy-clone-on-risc-v-fpga/8843),  especially from Pharap and MLXXXP. For example, being reminded that the avr-libc types are a thing -- where int is 16b. Aside from the original Arudoboy2 library, I used Pharap's [PokittoArduboy2Prototype](https://github.com/Pharap/PokittoArduboy2Prototype) as a reference for this work.
 
-
-### Arduino Core
-
-A minimal port of the Arduino API **relevant** to Arduboy2 functionality is located under [src/core](src/core).
-
 ### Arduboy2
 
 The arduboy2 library port is located under [src/arduboy2](src/arduboy2). Note how the library uses fixed width types (`uint8_t`, `int16_t`, etc) making porting onto different architecutes (say, riscv32) a trifle affair.
@@ -109,7 +104,5 @@ I will probably make an Adafruit Feather connector version of this gamepad when 
 # License
 
 Licensed under Apache License, Version 2.0 (see [LICENSE](LICENSE) for full text). Except for portions explicitly noted.
-
-The original Arduino API ([link](https://github.com/arduino/ArduinoCore-avr/tree/master/cores/arduino)) uses the LGPL 2.1 licence ([link](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html))).
 
 The original Arduboy2 library ([link](https://github.com/MLXXXp/Arduboy2)) is licensed under BSD 3-Clause ([link](https://opensource.org/licenses/BSD-3-Clause)).
