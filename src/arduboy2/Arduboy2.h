@@ -7,7 +7,7 @@
 #ifndef ARDUBOY2_H
 #define ARDUBOY2_H
 
-#include <Arduino.h>
+#include <krz.h>
 #include <EEPROM.h>
 #include <Arduboy2Core.h>
 #include <Arduboy2Beep.h>

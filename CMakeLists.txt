@@ -38,7 +38,7 @@ add_compile_options(
   --specs=picolibc.specs
 )
 
-set(LINKER_SCRIPT src/common/link.ld)
+set(LINKER_SCRIPT src/core/link.ld)
 set_realpath(LINKER_SCRIPT)
 
 add_link_options(

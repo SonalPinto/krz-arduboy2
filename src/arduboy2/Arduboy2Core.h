@@ -7,7 +7,7 @@
 #ifndef ARDUBOY2_CORE_H
 #define ARDUBOY2_CORE_H
 
-#include <Arduino.h>
+#include <krz.h>
 
 #define RGB_OFF HIGH
 #define RGB_ON  LOW

@@ -1,29 +1,11 @@
-/*
-  wiring.c - Partial implementation of the Wiring API for the ATmega8.
-  Part of Arduino - http://www.arduino.cc/
+// Copyright (c) 2020 Sonal Pinto
+// SPDX-License-Identifier: Apache-2.0
 
-  Copyright (c) 2005-2006 David A. Mellis
+#include <krz.h>
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General
-  Public License along with this library; if not, write to the
-  Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-  Boston, MA  02111-1307  USA
-
-  // --------------------------
-  Modified 2020 by Sonal Pinto
-*/
-
-#include <Arduino.h>
+// ============================================================
+// wiring
+// ============================================================
 
 static inline uint32_t read_mcycle(void) {
   uint32_t tmp;
@@ -71,3 +53,36 @@ void printk(const char *fmt, ...) {
     p++;
   }
 }
+
+// ============================================================
+// WMath
+// ============================================================
+void randomSeed(unsigned long seed)
+{
+  if (seed != 0) {
+    srand(seed);
+  }
+}
+
+long random(long howbig)
+{
+  if (howbig == 0) {
+    return 0;
+  }
+  return rand() % howbig;
+}
+
+long random(long howsmall, long howbig)
+{
+  if (howsmall >= howbig) {
+    return howsmall;
+  }
+  long diff = howbig - howsmall;
+  return random(diff) + howsmall;
+}
+
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+

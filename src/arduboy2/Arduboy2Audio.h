@@ -7,7 +7,7 @@
 #ifndef ARDUBOY2_AUDIO_H
 #define ARDUBOY2_AUDIO_H
 
-#include <Arduino.h>
+#include <krz.h>
 #include <EEPROM.h>
 
 /** \brief
