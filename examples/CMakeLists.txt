@@ -9,3 +9,4 @@ subdirlist(subdirs ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory(blinky)
 add_subdirectory(oled)
+add_subdirectory(HelloWorld)

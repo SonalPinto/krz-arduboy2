@@ -50,15 +50,6 @@ add_link_options(
 
 add_subdirectory(src)
 
-# set(ARDUBOY2_SRC
-#   src/Arduboy2Core.cpp
-#   src/Arduboy2Audio.cpp
-#   src/Arduboy2Beep.cpp
-#   src/SpritesB.cpp
-#   src/Sprites.cpp
-#   src/Arduboy2.cpp
-# )
-
 # =============================================================
 
 function(add_riscv_executable target)

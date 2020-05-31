@@ -99,6 +99,14 @@ double = 8
 // ============================================================
 // Drivers
 
+#define DEC 10
+#define HEX 16
+#define OCT 8
+#ifdef BIN
+#undef BIN
+#endif
+#define BIN 2
+
 #define HIGH 0x1
 #define LOW  0x0
 
@@ -154,6 +162,8 @@ double = 8
 #define PSTR(s) ((const PROGMEM char *)(s))
 
 #define pgm_read_byte(x) (*((const uint8_t *)(x)))
+
+#define F
 
 // Arduino Types
 typedef unsigned int word;

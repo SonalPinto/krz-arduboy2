@@ -19,12 +19,25 @@ I had a lot of help from the [Arduboy community forums (https://community.ardubo
 
 ### Arduino Core
 
-A minimal port of the Arduino API **relevant** to Arduboy2 functionality is located under [src/core](src/core). The original code ([link](https://github.com/arduino/ArduinoCore-avr/tree/master/cores/arduino)) uses the LGPL 2.1 licence ([link](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html))).
+A minimal port of the Arduino API **relevant** to Arduboy2 functionality is located under [src/core](src/core).
+
+### Arduboy2
+
+The arduboy2 library port is located under [src/arduboy2](src/arduboy2). Note how the library uses fixed width types (`uint8_t`, `int16_t`, etc) making porting onto different architecutes (say, riscv32) a trifle affair.
+* The SpritesB class is aliased to the Sprites class, and the `drawBitmap` function from SpritesB is used.
+* The Audio/Beep functions are yet to be implemented.
+* All avr-asm is obviously replaced (thanks to the helpful code in the library comments).
+* Arduino-specific operation and code is stripped out, like `mainNoUSB`, `exitToBootloader`, `setCPUSpeed8MHz`, etc.
+* Removed all variants of bootLogo except for the default one.
+* Removed flashlight and system controls. This is handled by the Loader.
+* Random seed generated (`generateRandomSeed`) using values read from the hardware performance counters.
+* Print functions included within Arduboy class with definitions in Arduboy2Print.cpp.
 
 
-### Save Files and EEPROM
+### EEPROM and Save Files
 
-![](https://img.shields.io/badge/Work-in%20progress-orange)
+The 1KB EEPROM functionality is maintained in RAM, since there is no actual EEPROM. For now, this is entirely volatile. A feature to save this data onto the onboard Flash is yet to be implemented. Need to be smart about this, since writing to Flash is a costly operation.
+
 
 ### Build
 
@@ -96,3 +109,7 @@ I will probably make an Adafruit Feather connector version of this gamepad when 
 # License
 
 Licensed under Apache License, Version 2.0 (see [LICENSE](LICENSE) for full text). Except for portions explicitly noted.
+
+The original Arduino API ([link](https://github.com/arduino/ArduinoCore-avr/tree/master/cores/arduino)) uses the LGPL 2.1 licence ([link](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html))).
+
+The original Arduboy2 library ([link](https://github.com/MLXXXp/Arduboy2)) is licensed under BSD 3-Clause ([link](https://opensource.org/licenses/BSD-3-Clause)).

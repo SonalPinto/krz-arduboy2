@@ -113,6 +113,8 @@
 // 8 pages high
 #define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7
 
+// ============================================================
+
 /** \brief
  * Lower level functions generally dealing directly with the hardware.
  *
@@ -601,6 +603,20 @@ class Arduboy2Core
      * of Arduino `delay()` will save a few bytes of code.
      */
     void static delayShort(uint16_t ms) __attribute__ ((noinline));
+
+    /** \brief
+      * The display buffer array in RAM.
+      *
+      * \details
+      * The display buffer (also known as the screen buffer) contains an
+      * image bitmap of the desired contents of the display, which is written
+      * to the display using the `display()` function. The drawing functions of
+      * this library manipulate the contents of the display buffer. A sketch can
+      * also access the display buffer directly.
+      *
+      * \see getBuffer()
+      */
+    static uint8_t sBuffer[(HEIGHT*WIDTH)/8];
 
   protected:
     // internals
