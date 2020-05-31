@@ -170,6 +170,10 @@ long random(long, long);
 void randomSeed(unsigned long);
 long map(long, long, long, long, long);
 
+// krz-math
+float sink(float);
+float cosk(float);
+
 extern "C" {
 // Print
 void printk(const char *fmt, ...);

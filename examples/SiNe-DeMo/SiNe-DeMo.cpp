@@ -63,16 +63,16 @@ void setup() {
 
 void loop() {
 
-  float p = 2 * sinf(d);
-  float q = 2 * sinf(-d);
+  float p = 2 * sink(d);
+  float q = 2 * sink(-d);
   arduboy.clear();
 
   for (byte k = 2; k < 15; k++) {
     // some calculations are used multiple times
     // so better caclutate them once and reuse
     // the results.
-    float r = sinf(d + (k * 0.4));
-    float t = sinf(d + 3 + (k * 0.4));
+    float r = sink(d + (k * 0.4));
+    float t = sink(d + 3 + (k * 0.4));
 
     // First lets draw the top 12 bals
     arduboy.fillCircle(k * 8 + p, 12 + (r * 10), 2, 1);
@@ -83,10 +83,10 @@ void loop() {
     arduboy.drawLine(k * 8 + p, 10 + (r * 10), k * 8 + q, (10 + t * 10), 1);
 
     // and finally we need a line from ball to ball on the top part
-    arduboy.drawLine((k * 8 + p), 12 + (r * 10), 6 + (k * 8 + p), (12 + sinf(d + ((k + 1) * 0.4)) * 10), 1);
+    arduboy.drawLine((k * 8 + p), 12 + (r * 10), 6 + (k * 8 + p), (12 + sink(d + ((k + 1) * 0.4)) * 10), 1);
 
     // and the bottom part
-    arduboy.drawLine((k * 8 + q), 12 + (t * 10), 6 + (k * 8 + q), (12 + sinf(d + 3 + ((k + 1) * 0.4)) * 10), 1);
+    arduboy.drawLine((k * 8 + q), 12 + (t * 10), 6 + (k * 8 + q), (12 + sink(d + 3 + ((k + 1) * 0.4)) * 10), 1);
   }
 
   // begin wobbling text
@@ -99,19 +99,19 @@ void loop() {
   // Now let's put each letter on the sine wave
   // int c makes the letters move right to left
   // and sine calculation makes them go up an down
-  arduboy.drawBitmap(c, 32 - sinf(d + (0 * 0.4)) * 5, LetterH, 8, 8, 1);
-  arduboy.drawBitmap(c + 10, 32 - sinf(d + (1 * 0.4)) * 5, LetterE, 8, 8, 1);
-  arduboy.drawBitmap(c + 20, 32 - sinf(d + (2 * 0.4)) * 5, LetterL, 8, 8, 1);
-  arduboy.drawBitmap(c + 30, 32 - sinf(d + (3 * 0.4)) * 5, LetterL, 8, 8, 1);
-  arduboy.drawBitmap(c + 40, 32 - sinf(d + (4 * 0.4)) * 5, LetterO, 8, 8, 1);
-  arduboy.drawBitmap(c + 50, 32 - sinf(d + (5 * 0.4)) * 5, Letter, 8, 8, 1);
-  arduboy.drawBitmap(c + 60, 32 - sinf(d + (6 * 0.4)) * 5, LetterA, 8, 8, 1);
-  arduboy.drawBitmap(c + 70, 32 - sinf(d + (7 * 0.4)) * 5, LetterR, 8, 8, 1);
-  arduboy.drawBitmap(c + 80, 32 - sinf(d + (8 * 0.4)) * 5, LetterD, 8, 8, 1);
-  arduboy.drawBitmap(c + 90, 32 - sinf(d + (9 * 0.4)) * 5, LetterU, 8, 8, 1);
-  arduboy.drawBitmap(c + 100, 32 - sinf(d + (10 * 0.4)) * 5, LetterB, 8, 8, 1);
-  arduboy.drawBitmap(c + 110, 32 - sinf(d + (11 * 0.4)) * 5, LetterO, 8, 8, 1);
-  arduboy.drawBitmap(c + 120, 32 - sinf(d + (12 * 0.4)) * 5, LetterY, 8, 8, 1);
+  arduboy.drawBitmap(c, 32 - sink(d + (0 * 0.4)) * 5, LetterH, 8, 8, 1);
+  arduboy.drawBitmap(c + 10, 32 - sink(d + (1 * 0.4)) * 5, LetterE, 8, 8, 1);
+  arduboy.drawBitmap(c + 20, 32 - sink(d + (2 * 0.4)) * 5, LetterL, 8, 8, 1);
+  arduboy.drawBitmap(c + 30, 32 - sink(d + (3 * 0.4)) * 5, LetterL, 8, 8, 1);
+  arduboy.drawBitmap(c + 40, 32 - sink(d + (4 * 0.4)) * 5, LetterO, 8, 8, 1);
+  arduboy.drawBitmap(c + 50, 32 - sink(d + (5 * 0.4)) * 5, Letter, 8, 8, 1);
+  arduboy.drawBitmap(c + 60, 32 - sink(d + (6 * 0.4)) * 5, LetterA, 8, 8, 1);
+  arduboy.drawBitmap(c + 70, 32 - sink(d + (7 * 0.4)) * 5, LetterR, 8, 8, 1);
+  arduboy.drawBitmap(c + 80, 32 - sink(d + (8 * 0.4)) * 5, LetterD, 8, 8, 1);
+  arduboy.drawBitmap(c + 90, 32 - sink(d + (9 * 0.4)) * 5, LetterU, 8, 8, 1);
+  arduboy.drawBitmap(c + 100, 32 - sink(d + (10 * 0.4)) * 5, LetterB, 8, 8, 1);
+  arduboy.drawBitmap(c + 110, 32 - sink(d + (11 * 0.4)) * 5, LetterO, 8, 8, 1);
+  arduboy.drawBitmap(c + 120, 32 - sink(d + (12 * 0.4)) * 5, LetterY, 8, 8, 1);
   // end wobbling text
 
 
@@ -127,13 +127,13 @@ void loop() {
   // and so is the moving of the lines too.
   for (byte k = 2; k < 20; k++) {
     // the first line
-    arduboy.drawRect(k * 6 + (p / 2), 54 + (sinf(d + (k * 0.1)) * 6), 4, 1 + (p / 2), 1);
+    arduboy.drawRect(k * 6 + (p / 2), 54 + (sink(d + (k * 0.1)) * 6), 4, 1 + (p / 2), 1);
     // the second line is actually the same line,
     // but evolved 1/3 further in the sine calculation
-    arduboy.drawRect(k * 6 + (sinf(d + 2)), 54 + (sinf(d + 2 + (k * 0.1)) * 6), 4, 1 + sinf(d + 2), 1);
+    arduboy.drawRect(k * 6 + (sink(d + 2)), 54 + (sink(d + 2 + (k * 0.1)) * 6), 4, 1 + sink(d + 2), 1);
     // the third line is actually the same line,
     // but evolved 2/3 further in the sine calculation
-    arduboy.drawRect(k * 6 + (sinf(d + 4)), 54 + (sinf(d + 4 + (k * 0.1)) * 6), 4, 1 + sinf(d + 4), 1);
+    arduboy.drawRect(k * 6 + (sink(d + 4)), 54 + (sink(d + 4 + (k * 0.1)) * 6), 4, 1 + sink(d + 4), 1);
   }
   // int c is supstracted to move those letters
   // right to left. If all letters are offscreen

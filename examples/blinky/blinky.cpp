@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Sonal Pinto
 // SPDX-License-Identifier: Apache-2.0
 
-#include <Arduino.h>
+#include <krz.h>
 
 uint8_t ledr;
 uint8_t ledg;

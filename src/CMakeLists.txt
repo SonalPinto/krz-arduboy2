@@ -5,6 +5,7 @@ add_library(core STATIC
   core/mini-printf.c
   core/EEPROM.cpp
   core/krz.cpp
+  core/krz-math.cpp
   core/main.cpp
 )
 
