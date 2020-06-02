@@ -2,7 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 add_riscv_executable(ArduBreakout
-  ${CORE_SRC}
-  ${ARDUBOY2_SRC}
   ArduBreakout.cpp
+)
+
+target_link_libraries(ArduBreakout
+  PUBLIC
+    arduboy2
 )

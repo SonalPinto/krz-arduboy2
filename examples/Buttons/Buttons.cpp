@@ -19,8 +19,8 @@ Arduboy2 arduboy;
 
 // Variables for your game go here.
 char title[] = "Press Buttons!";
-uint8_t x;
-uint8_t y;
+byte x;
+byte y;
 
 // Width of each charcter including inter-character space
 #define CHAR_WIDTH 6

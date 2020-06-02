@@ -177,6 +177,7 @@ float cosk(float);
 extern "C" {
 // Print
 void printk(const char *fmt, ...);
+int sprintf(char* buffer, const char *fmt, ...);
 }
 
 #endif // _KRZ_H_

@@ -54,6 +54,18 @@ void printk(const char *fmt, ...) {
   }
 }
 
+int sprintf(char* buffer, const char *fmt, ...) {
+  int len;
+
+  // Format using mini-printf
+  va_list va;
+  va_start(va, fmt);
+  len = mini_vsnprintf(buffer, UART_BUFFER_SIZE, fmt, va);
+  va_end(va);
+
+  return len;
+}
+
 // ============================================================
 // WMath
 // ============================================================

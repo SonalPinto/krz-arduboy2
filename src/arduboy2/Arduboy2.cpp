@@ -37,7 +37,7 @@ void Arduboy2Base::begin()
 
   bootLogo();
 
-  // waitNoButtons(); // wait for all buttons to be released
+  waitNoButtons(); // wait for all buttons to be released
 }
 
 void Arduboy2Base::bootLogo()
