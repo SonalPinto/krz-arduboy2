@@ -78,4 +78,5 @@ endfunction()
 
 # =============================================================
 
-add_subdirectory(examples)
+add_subdirectory(demos)
+add_subdirectory(games)

@@ -21,6 +21,12 @@ public:
   EEPROM_t();
   uint8_t read(int address);
   void update(int address, uint8_t value);
+
+  uint8_t get(int address, uint8_t &value);
+  void put(int address, uint8_t value);
+
+  uint8_t get(int address, uint16_t &value);
+  void put(int address, uint16_t value);
 };
 
 // Global instance

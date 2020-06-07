@@ -2,6 +2,8 @@
 
 The [Arduboy](https://arduboy.com/) is a neat credit-card sized handhled game system. It  officially runs on the atmega32u4. As a part of the [Kronos RISC-V](https://github.com/SonalPinto/kronos) project, I've ported the [Arduboy2](https://github.com/MLXXXp/Arduboy2) library since it is the most popular framework for developing games for the Arduboy. The game system and games are **natively** compiled for RISC-V, rather than emulated.
 
+![](docs/arduboy-krz.png)
+
 Early protoype: https://www.youtube.com/watch?v=nveWIcuFHzo
 
 

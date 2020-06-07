@@ -10,6 +10,7 @@ Drivers for KRZBOY SoC and Wrappers for Arduino API calls relevant to Arduboy2 l
 
 #include <cstdlib>
 #include <cstdint>
+#include <cstddef>
 #include <cstring>
 #include <cmath>
 #include <mini-printf.h>
