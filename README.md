@@ -1,4 +1,4 @@
-# KRZ: Arduboy2
+# Arduboy-KRZ
 
 The [Arduboy](https://arduboy.com/) is a neat credit-card sized handhled game system. It  officially runs on the atmega32u4. As a part of the [Kronos RISC-V](https://github.com/SonalPinto/kronos) project, I've ported the [Arduboy2](https://github.com/MLXXXp/Arduboy2) library since it is the most popular framework for developing games for the Arduboy. The game system and games are **natively** compiled for RISC-V, rather than emulated.
 
@@ -9,7 +9,18 @@ Early protoype: https://www.youtube.com/watch?v=nveWIcuFHzo
 
 # Press Start
 
-![](https://img.shields.io/badge/Work-in%20progress-orange)
+*Status*::![](https://img.shields.io/badge/Work-in%20progress-orange)
+- Currently, I'm porting games and dependant libs (ArduboyTones, FixedPoints, etc).
+- You can build individual games and run 'em on the system (See Build section below).
+- Save Game feature (right now, the EEPROM is emulated in RAM).
+- Loader UI (pick a game from a library on flash) - todo
+
+Assorted list of games ported, mostly from eried's [ArduboyCollection](https://github.com/eried/ArduboyCollection) and other popular titles that I found interesting in the [Arduboy Community Forums](https://community.arduboy.com).
+
+|Game|Author|License|Source|
+|---|---|---|---|
+|ArduBreakout|MLXXXP|LGPL-2.1|[Github](https://github.com/MLXXXp/Arduboy2/tree/master/examples/ArduBreakout)|
+|ChromeDino|flaki|Unspecified|[Github](https://github.com/flaki/arduboy-rund-ino.git)|
 
 
 # Software
@@ -41,6 +52,7 @@ The 1KB EEPROM functionality is maintained in RAM, since there is no actual EEPR
 The project rides on a cmake build flow. To build from source you'll need these:
   - [riscv-gnu-toolchain](https://github.com/riscv/riscv-gnu-toolchain)
   - [picolibc](https://github.com/keith-packard/picolibc)
+  - [iceprog](https://github.com/cliffordwolf/icestorm.git)
   - [cmake](https://cmake.org/)
 
 >Why picolibc?
@@ -51,13 +63,29 @@ The project rides on a cmake build flow. To build from source you'll need these:
 
 >This is merely one of its attractive features. There's also the fine tuned minimalist stdlib with TLS, and tinystdio. I have no doubt that picolibc will replace newlibc-nano for embedded applications.
 
+First, prepare the build directory and construct targets with cmake. Then, any title under the Demos and Games directory can be compiled. Lastly, the prepared binary can be flashed onto the icebreaker with iceprog. Note that the application is stored at a base address of 0x100000 as the lowest 1MB is preserved for the KRZ SoC FPGA image. This is the procedure for flashing individual games onto the Arduboy-KRZ.
 
-![](https://img.shields.io/badge/Work-in%20progress-orange)
+```
+mkdir build
+cd build
+cmake ..
+
+make SiNe-DeMo
+
+iceprog -o 1M bin/SiNe-DeMo.krz.bin
+```
+
+*Demos*
+- blinky: Minimal
+- oled: draw patterns on the OLED
+- HelloWorld: Scrolling Text
+- SiNe-DeMo: Team ARG's demo showing off compute capabilities of the system
+- Buttons: Button test
 
 
 # Hardware
 
-This project runs on the KRZBOY SoC on the iCEBreaker FPGA board. The [Arduboy PMOD](https://github.com/SonalPinto/arduboy-pmod) designed along the minimalist spirit of the Arduboy hardware is a credit card sized dual PMOD (Peripheral Module) adaptor.
+This project runs on the KRZBOY SoC on the iCEBreaker FPGA board. The [Arduboy PMOD](https://github.com/SonalPinto/arduboy-pmod) designed along the minimalist spirit of the Arduboy hardware is a credit card sized dual PMOD (Peripheral Module) adaptor. The whole system (iCEBreaker + Arduboy-PMOD) is called the *Arduboy-KRZ*.
 
 The KRZBOY SoC is a [minor variant](https://github.com/SonalPinto/kronos/blob/master/rtl/platform/krz/krzboy.sv) of the KRZ SoC. It is a Kronos-powered SoC designed for the iCE40UP5K.
 
@@ -108,3 +136,5 @@ I will probably make an Adafruit Feather connector version of this gamepad when 
 Licensed under Apache License, Version 2.0 (see [LICENSE](LICENSE) for full text). Except for portions explicitly noted.
 
 The original Arduboy2 library ([link](https://github.com/MLXXXp/Arduboy2)) is licensed under BSD 3-Clause ([link](https://opensource.org/licenses/BSD-3-Clause)).
+
+The games and libraries have their licenses in their individual directories.

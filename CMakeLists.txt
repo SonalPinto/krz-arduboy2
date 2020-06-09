@@ -34,7 +34,9 @@ add_compile_options(
   -O2
   -march=rv32i
   -mabi=ilp32
-  -fdata-sections -ffunction-sections
+  -ffunction-sections
+  -fdata-sections
+  -fno-exceptions
   --specs=picolibc.specs
 )
 
@@ -66,7 +68,7 @@ function(add_riscv_executable target)
 
   add_custom_command(TARGET ${target} POST_BUILD
     COMMAND
-      ${OBJDUMP} -d "${target}.elf" > "${target}.objdump"
+      ${OBJDUMP} -drC "${target}.elf" > "${target}.objdump"
     COMMAND
       ${OBJCOPY} -O binary "${target}.elf" "${target}.bin"
     COMMAND
