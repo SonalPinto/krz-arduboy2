@@ -8,7 +8,7 @@
 #define ARDUBOY2_AUDIO_H
 
 #include <krz.h>
-#include <EEPROM.h>
+#include <krz-eeprom.h>
 
 /** \brief
  * Provide speaker and sound control.

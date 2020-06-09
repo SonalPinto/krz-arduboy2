@@ -8,7 +8,8 @@
 #define ARDUBOY2_H
 
 #include <krz.h>
-#include <EEPROM.h>
+#include <krz-print.h>
+#include <krz-eeprom.h>
 #include <Arduboy2Core.h>
 #include <Arduboy2Beep.h>
 #include <Sprites.h>
@@ -1126,7 +1127,7 @@ class Arduboy2Base : public Arduboy2Core
  *
  * \see Arduboy2Base
  */
-class Arduboy2 : public Arduboy2Base
+class Arduboy2 : public Print, public Arduboy2Base
 {
  friend class Arduboy2Ex;
 
@@ -1217,27 +1218,8 @@ class Arduboy2 : public Arduboy2Base
    *
    * \see Print setTextSize() setTextWrap()
    */
-  size_t write(uint8_t);
-  size_t write(const char *str);
-  size_t write(const uint8_t *buffer, size_t size);
-  size_t write(const char *buffer, size_t size);
-
-  size_t print(const char[]);
-  size_t print(char);
-  size_t print(unsigned char, int = DEC);
-  size_t print(int, int = DEC);
-  size_t print(unsigned int, int = DEC);
-  size_t print(long, int = DEC);
-  size_t print(unsigned long, int = DEC);
-
-  size_t println(const char[]);
-  size_t println(char);
-  size_t println(unsigned char, int = DEC);
-  size_t println(int, int = DEC);
-  size_t println(unsigned int, int = DEC);
-  size_t println(long, int = DEC);
-  size_t println(unsigned long, int = DEC);
-  size_t println();
+  using Print::write;
+  virtual size_t write(uint8_t);
 
   /** \brief
    * Draw a single ASCII character at the specified location in the screen

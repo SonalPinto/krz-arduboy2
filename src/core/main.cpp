@@ -3,9 +3,9 @@
 
 #include <krz.h>
 
-extern "C" {
-__attribute__ ((interrupt)) void trap_handler(void);
-}
+extern "C" void trap_handler(void) __attribute__ ((interrupt));
+extern "C" void __cxa_pure_virtual(void);
+extern "C" void __cxa_deleted_virtual(void);
 
 void trap_handler(void) {
   uint32_t mcause, mtval, mepc;
@@ -20,6 +20,15 @@ void trap_handler(void) {
   printk("mepc = %x\n", mepc);
   while(1);
 }
+
+void __cxa_pure_virtual(void) {
+  asm("ebreak");
+}
+
+void __cxa_deleted_virtual(void) {
+  asm("ebreak");
+}
+
 
 void init() {
   /*

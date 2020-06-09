@@ -3,9 +3,10 @@
 
 add_library(core STATIC
   core/mini-printf.c
-  core/EEPROM.cpp
   core/krz.cpp
   core/krz-math.cpp
+  core/krz-print.cpp
+  core/krz-eeprom.cpp
   core/main.cpp
 )
 
@@ -19,7 +20,6 @@ add_library(arduboy2 STATIC
   arduboy2/Arduboy2Audio.cpp
   arduboy2/Arduboy2Beep.cpp
   arduboy2/Sprites.cpp
-  arduboy2/Arduboy2Print.cpp
   arduboy2/Arduboy2.cpp
 )
 

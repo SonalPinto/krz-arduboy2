@@ -896,6 +896,31 @@ void Arduboy2::bootLogoText()
   bootLogoExtra();
 }
 
+size_t Arduboy2::write(uint8_t c)
+{
+  if (c == '\n')
+  {
+    cursor_y += textSize * 8;
+    cursor_x = 0;
+  }
+  else if (c == '\r')
+  {
+    // skip em
+  }
+  else
+  {
+    drawChar(cursor_x, cursor_y, c, textColor, textBackground, textSize);
+    cursor_x += textSize * 6;
+    if (textWrap && (cursor_x > (WIDTH - textSize * 6)))
+    {
+      // calling ourselves recursively for 'newline' is
+      // 12 bytes smaller than doing the same math here
+      write('\n');
+    }
+  }
+  return 1;
+}
+
 void Arduboy2::bootLogoExtra()
 {
   uint8_t c;

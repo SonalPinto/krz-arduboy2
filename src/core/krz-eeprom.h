@@ -1,8 +1,8 @@
 // Copyright (c) 2020 Sonal Pinto
 // SPDX-License-Identifier: Apache-2.0
 
-#ifndef _EEPROM_H_
-#define _EEPROM_H_
+#ifndef _KRZ_EEPROM_H_
+#define _KRZ_EEPROM_H_
 
 #include <cstdint>
 #include <cstring>
@@ -13,12 +13,12 @@
 ref: https://forum.arduino.cc/index.php?topic=312645.0
 */
 
-class EEPROM_t {
+class KRZ_EEPROM {
 public:
   // 1KB in RAM
   static uint8_t MEM[1024];
 
-  EEPROM_t();
+  KRZ_EEPROM();
   uint8_t read(int address);
   void update(int address, uint8_t value);
 
@@ -30,6 +30,6 @@ public:
 };
 
 // Global instance
-extern EEPROM_t EEPROM;
+extern KRZ_EEPROM EEPROM;
 
-#endif
+#endif // _KRZ_EEPROM_H_
