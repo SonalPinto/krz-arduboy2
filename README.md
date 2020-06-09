@@ -9,7 +9,7 @@ Early protoype: https://www.youtube.com/watch?v=nveWIcuFHzo
 
 # Press Start
 
-*Status*::![](https://img.shields.io/badge/Work-in%20progress-orange)
+![](https://img.shields.io/badge/Work-in%20progress-orange)
 - Currently, I'm porting games and dependant libs (ArduboyTones, FixedPoints, etc).
 - You can build individual games and run 'em on the system (See Build section below).
 - Save Game feature (right now, the EEPROM is emulated in RAM).
@@ -56,12 +56,9 @@ The project rides on a cmake build flow. To build from source you'll need these:
   - [cmake](https://cmake.org/)
 
 >Why picolibc?
-
->newlibc's crt0 only sets up the global pointer and initializes the bss. It expects the "host envioronment" to setup the critical stack pointer before entering the application, which on most embedded solutions is non existant. Hence, almost everyone rolls their own crt0.
-
->However, picolibc brings a breath of fresh air to the embedded libc world with a crt0 that actually _initializes_ the stack pointer. Hence, now all I need to do is setup the trap handler vector. Done.
-
->This is merely one of its attractive features. There's also the fine tuned minimalist stdlib with TLS, and tinystdio. I have no doubt that picolibc will replace newlibc-nano for embedded applications.
+newlibc's crt0 only sets up the global pointer and initializes the bss. It expects the "host envioronment" to setup the critical stack pointer before entering the application, which on most embedded solutions is non existant. Hence, almost everyone rolls their own crt0.
+However, picolibc brings a breath of fresh air to the embedded libc world with a crt0 that actually _initializes_ the stack pointer. Hence, now all I need to do is setup the trap handler vector. Done.
+This is merely one of its attractive features. There's also the fine tuned minimalist stdlib with TLS, and tinystdio. I have no doubt that picolibc will replace newlibc-nano for embedded applications.
 
 First, prepare the build directory and construct targets with cmake. Then, any title under the Demos and Games directory can be compiled. Lastly, the prepared binary can be flashed onto the icebreaker with iceprog. Note that the application is stored at a base address of 0x100000 as the lowest 1MB is preserved for the KRZ SoC FPGA image. This is the procedure for flashing individual games onto the Arduboy-KRZ.
 
